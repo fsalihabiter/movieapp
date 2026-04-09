@@ -14,29 +14,23 @@ const Movie = (props) => {
       : item.overview.split(".")[0] + ".")
     : "";
 
+  const linkPath = item.media_type === 'tv' ? `/seriesdetails/${item.id}` : `/moviedetails/${item.id}`;
+
   const posterPath = item.poster_path != null
-    ? <img src={API_IMAGE + item.poster_path} alt={item.title} />
+    ? <Link to={linkPath}><img src={API_IMAGE + item.poster_path} alt={item.title} /></Link>
     : <div className='poster_null'>
-      <h3 className='poster_null_title'><Link to={`/moviedetails/${item.id}`} className='movie-title'>{item.title}</Link></h3>
+      <h3 className='poster_null_title'><Link to={linkPath} className='movie-title'>{item.title}</Link></h3>
     </div>;
 
   const backdropPath = item.backdrop_path != null
-    ? <img src={API_IMAGE + item.backdrop_path} alt={item.title} />
+    ? <Link to={linkPath}><img src={API_IMAGE + item.backdrop_path} alt={item.title} /></Link>
     : <></>;
 
   return ( item ? 
     <div key={item.id} className="movie" >
       {posterPath}
-      <div className='movie-detail' >
-        {backdropPath}
-        <span className='vote'>{item.vote_average}</span>
-        <Link to={`/moviedetails/${item.id}`} className='movie-title'>{item.title}</Link>
-        <div className='movie-overview'>
-          <p> {summary} </p>
-        </div>
-      </div>
     </div>
-    : <Skeleton />
+    : <Skeleton variant="rectangular" width={200} height={300} />
   )
 }
 

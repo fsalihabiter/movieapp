@@ -35,7 +35,7 @@ const SlideCarousel = (props) => {
       })
       .catch((e) => console.log(e))
       .finally(() => setLoading(false));
-  }, [props.movieUrl, movies]);
+  }, [props.movieUrl]);
 
   return (
     <>

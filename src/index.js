@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
+import { AuthProvider } from './context/AuthContext';
 
 import App from './App';
+import './i18n';
 
 import './index.css';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: '"Outfit", "Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+  },
   palette: {
     mode: 'dark',
     body4: {
@@ -45,7 +49,7 @@ const theme = createTheme({
     MuiContainer: {
       styleOverrides: {
         root: {
-          backgroundColor: '#1A2027',
+          backgroundColor: 'transparent',
           padding: 0,
           maxWidth: '100%',
           width: '100%'
@@ -55,7 +59,9 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#1A2027',
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          backgroundImage: 'none'
         },
       },
     },
@@ -74,7 +80,9 @@ theme.typography.body5 = {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>
+  <AuthProvider>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </AuthProvider>
 );

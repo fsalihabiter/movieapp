@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Box, Pagination } from '@mui/material';
 import '../assets/css/home.css';
 
 import MovieList from '../components/MovieList';
@@ -28,7 +29,7 @@ const Home = () => {
 
     async function getMovies() {
       const resMovies = await axios.get(API_POPULAR+currentPage);
-      setMovies(resMovies.data.results.slice(0,10));
+      setMovies(resMovies.data.results);
     }
     
     getGenres();
@@ -39,14 +40,24 @@ const Home = () => {
     console.log(movies);
 
   return (
-    <>
-      
+    <Box sx={{ pt: { xs: 12, md: 15 }, pb: 10, px: { xs: 2, md: 5 } }}>
+      <h3 className="neonHeading">Popüler Filmler</h3>
       <MovieList movieList={movies} genreList={genres} />
 
-      <div className='pages'>
-        <div showQuickJumper defaultCurrent={currentPage} total={10000} onChange={onChange} />
-      </div>
-    </>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+        <Pagination 
+          count={500} 
+          page={currentPage} 
+          onChange={(e, page) => onChange(page)} 
+          size="large"
+          color="primary"
+          sx={{ 
+            '& .MuiPaginationItem-root': { color: '#fff', borderColor: 'rgba(0, 255, 255, 0.3)', '&:hover': { backgroundColor: 'rgba(0, 255, 255, 0.2)' } },
+            '& .Mui-selected': { backgroundColor: 'rgba(0, 255, 255, 0.6) !important', color: '#000', boxShadow: '0 0 10px rgba(0,255,255,0.8)' }
+          }} 
+        />
+      </Box>
+    </Box>
   )
 }
 

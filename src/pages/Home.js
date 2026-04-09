@@ -1,8 +1,12 @@
 import React from "react";
+import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import "../assets/css/home.css";
 import "react-multi-carousel/lib/styles.css";
 
+import Hero from "../components/Hero";
+import RecommendedMovies from "../components/RecommendedMovies";
 import PopularMovies from "../components/PopularMovies";
 import ReleasedMovies from "../components/ReleasedMovies";
 import LastedMovies from "../components/LastedMovies";
@@ -11,36 +15,32 @@ import LastedComedyMovies from "../components/LastedComedyMovies";
 import Turk2022Movies from "../components/Turk2022Movies";
 
 const Home = () => {
+	const { t } = useTranslation();
 	return (
-		<>
-			<h3>Popüler Filmler</h3>
-			<PopularMovies />
+		<Box sx={{ width: '100%', pb: 5 }}>
+            <Hero />
+            <RecommendedMovies />
 
-			<hr />
+            <Box sx={{ pl: { xs: 2, md: 5 }, pr: { xs: 2, md: 0 } }}>
+                <h3 className="neonHeading">{t('home.popular_movies')}</h3>
+                <Box sx={{ mb: 6 }}><PopularMovies /></Box>
 
-			<h3>Yayımlanan Filmler</h3>
-			<ReleasedMovies />
+                <h3 className="neonHeading">{t('home.released_movies')}</h3>
+                <Box sx={{ mb: 6 }}><ReleasedMovies /></Box>
 
-			<hr />
+                <h3 className="neonHeading">{t('home.lasted_movies')}</h3>
+                <Box sx={{ mb: 6 }}><LastedMovies /></Box>
 
-			<h3>Son Çıkan Filmler</h3>
-			<LastedMovies />
+                <h3 className="neonHeading">{t('home.popular_series')}</h3>
+                <Box sx={{ mb: 6 }}><PopularSeries /></Box>
 
-			<hr />
+                <h3 className="neonHeading">{t('home.lasted_comedy')}</h3>
+                <Box sx={{ mb: 6 }}><LastedComedyMovies /></Box>
 
-			<h3>Popüler Diziler</h3>
-			<PopularSeries />
-
-			<hr />
-
-			<h3>Son Çıkan Komedi Filmleri</h3>
-			<LastedComedyMovies />
-
-			<hr />
-
-			<h3>2025 Türk Filmleri</h3>
-			<Turk2022Movies />
-		</>
+                <h3 className="neonHeading">{t('home.turk_2022')}</h3>
+                <Box sx={{ mb: 6 }}><Turk2022Movies /></Box>
+            </Box>
+		</Box>
 	);
 };
 

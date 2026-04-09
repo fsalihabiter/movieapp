@@ -1,0 +1,21 @@
+{
+  "menu": {
+    "home": "Anasayfa",
+    "movies": "Filmler",
+    "series": "Diziler",
+    "actors": "Oyuncular",
+    "profile": "Profil",
+    "mylists": "Listelerim",
+    "favorites": "Favoriler",
+    "logout": "Çıkış"
+  },
+  "home": {
+    "popular_movies": "Popüler Filmler",
+    "released_movies": "Yayımlanan Filmler",
+    "lasted_movies": "Son Çıkan Filmler",
+    "popular_series": "Popüler Diziler",
+    "lasted_comedy": "Son Çıkan Komedi Filmleri",
+    "turk_2022": "2025 Türk Filmleri",
+    "recommended_for_you": "Sizin İçin Önerilenler"
+  }
+}

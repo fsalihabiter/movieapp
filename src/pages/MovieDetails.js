@@ -3,12 +3,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Detailed from '../components/MovieDetails/Detailed'
 
-const MovieDetails = () => {
+const MovieDetails = ({ type = "movie" }) => {
 
   const { movieId } = useParams();
 
   return (
-    <Detailed movieId={movieId} />
+    <Detailed movieId={movieId} type={type} />
   )
 }
 

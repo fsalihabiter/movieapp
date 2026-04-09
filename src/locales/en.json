@@ -1,0 +1,21 @@
+{
+  "menu": {
+    "home": "Home",
+    "movies": "Movies",
+    "series": "Series",
+    "actors": "Actors",
+    "profile": "Profile",
+    "mylists": "My Lists",
+    "favorites": "Favorites",
+    "logout": "Logout"
+  },
+  "home": {
+    "popular_movies": "Popular Movies",
+    "released_movies": "Released Movies",
+    "lasted_movies": "Latest Movies",
+    "popular_series": "Popular Series",
+    "lasted_comedy": "Latest Comedy Movies",
+    "turk_2022": "2025 Turkish Movies",
+    "recommended_for_you": "Recommended For You"
+  }
+}

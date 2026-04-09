@@ -1,16 +1,16 @@
 import React from 'react'
 import Movie from './Movie'
+import { Grid } from '@mui/material'
 
-const MovieList = ( params ) => {
-
+const MovieList = ({ movieList, genreList }) => {
   return (
-    <>
-      <div className='movie-list'>
-        {params.movieList.map((movie) => (
-          <Movie key={movie.id} movie={movie} genreList={params.genreList} />
-        ))} 
-      </div>
-    </>
+    <Grid container spacing={3} sx={{ my: 2 }}>
+      {movieList.map((movie) => (
+        <Grid item xs={6} sm={4} md={3} lg={2.4} key={movie.id}>
+          <Movie movie={movie} genreList={genreList} />
+        </Grid>
+      ))} 
+    </Grid>
   )
 }
 

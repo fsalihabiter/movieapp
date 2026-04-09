@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { teal } from '@mui/material/colors';
 
 import AppBar from '@mui/material/AppBar';
@@ -12,12 +12,27 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import NotStartedIcon from '@mui/icons-material/NotStarted';
+import { useTranslation } from 'react-i18next';
 
 import { NavLink } from 'react-router-dom';
 
 const MenuBar = () => {
+    const { t, i18n } = useTranslation();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const isScrolled = window.scrollY > 50;
+            if (isScrolled !== scrolled) {
+                setScrolled(isScrolled);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [scrolled]);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -44,21 +59,29 @@ const MenuBar = () => {
     }
 
     const pages = [
-        getPages('Anasayfa', '1', '/home', null),
-        getPages('Filmler', '2', '/movies', null),
-        getPages('Diziler', '3', '/series', null),
-        getPages('Oyuncular', '4', '/actors', null),
+        getPages(t('menu.home'), '1', '/home', null),
+        getPages(t('menu.movies'), '2', '/movies', null),
+        getPages(t('menu.series'), '3', '/series', null),
+        getPages(t('menu.actors'), '4', '/actors', null),
     ];
 
     const settings = [
-        getPages('Profil', '1', '/profile', null),
-        getPages('Listelerim', '2', '/mylists', null),
-        getPages('Favoriler', '3', '/myfavorites', null),
-        getPages('Çıkış', '4', '/logout', null),
+        getPages(t('menu.profile'), '1', '/profile', null),
+        getPages(t('menu.mylists'), '2', '/mylists', null),
+        getPages(t('menu.favorites'), '3', '/myfavorites', null),
+        getPages(t('menu.logout'), '4', '/logout', null),
     ];
 
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" sx={{ 
+            backgroundColor: scrolled ? 'rgba(6, 25, 59, 0.7)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(30px)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(30px)' : 'none',
+            borderBottom: scrolled ? '1px solid rgba(0, 255, 255, 0.3)' : 'none',
+            transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+            boxShadow: scrolled ? '0 5px 30px rgba(0, 255, 255, 0.2), 0 10px 50px rgba(255, 0, 255, 0.15), inset 0 -2px 10px rgba(255, 170, 0, 0.1)' : 'none',
+            zIndex: 1100
+        }}>
             <Container maxWidth="xxl">
                 <Toolbar disableGutters>
                     <NotStartedIcon sx={{ display: { xs: 'none', md: 'flex', fontSize: '2.2rem' }, mr: 1 }}
@@ -114,7 +137,10 @@ const MenuBar = () => {
                         ))}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: '15px' }}>
+                        <Typography sx={{ cursor: 'pointer', color: teal[200], fontWeight: 'bold' }} onClick={() => i18n.changeLanguage(i18n.resolvedLanguage === 'tr' ? 'en' : 'tr')}>
+                            {i18n.resolvedLanguage === 'tr' ? 'EN' : 'TR'}
+                        </Typography>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} htmlColor={teal[200]}>
                                 <Avatar alt="Saliha Biter" htmlColor={teal[200]}>SB</Avatar>
