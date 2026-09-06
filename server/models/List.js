@@ -22,6 +22,7 @@ const ListSchema = new mongoose.Schema({
     movieId: { type: String, required: true },
     posterPath: { type: String },
     title: { type: String },
+    mediaType: { type: String, default: 'movie' },
     addedAt: { type: Date, default: Date.now }
   }]
 }, { timestamps: true });

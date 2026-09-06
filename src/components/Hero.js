@@ -10,11 +10,9 @@ const Hero = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch a trending movie to showcase in Hero
         axios.get(`https://api.themoviedb.org/3/trending/movie/week?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR`)
             .then((res) => {
                 const results = res.data.results;
-                // Get top trending movie or random top 5
                 const randomMovie = results[Math.floor(Math.random() * 5)];
                 setMovie(randomMovie);
             })
@@ -22,54 +20,82 @@ const Hero = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading || !movie) return <Skeleton variant="rectangular" width="100%" height="80vh" sx={{ bgcolor: 'rgba(255,255,255,0.05)', mb: 4 }} />;
+    if (loading || !movie) return <Skeleton variant="rectangular" width="100%" height="100vh" sx={{ bgcolor: 'rgba(255,255,255,0.02)', mb: 4 }} />;
 
     return (
         <Box sx={{
             width: '100%',
-            height: '85vh',
-            backgroundImage: `linear-gradient(to top, #05051a 0%, rgba(21, 0, 48, 0.6) 40%, rgba(0, 0, 0, 0.1) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'top center',
+            height: '100vh',
+            position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-end',
             p: { xs: 4, md: 8 },
-            mb: 2,
-            marginTop: '-68.5px' // Navbar height negative margin to allow absolute positioning seamlessly
+            mb: 5,
+            marginTop: '-90px',
+            pt: '100px',
         }}>
-            <Box sx={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
-                <Typography variant="h2" mb={2} fontWeight={800} sx={{ textShadow: '2px 2px 20px rgba(0,0,0,0.8)', fontSize: { xs: '2.5rem', md: '4rem' } }}>
+            {/* Background Layer with Gradient Fade to Theme Dark */}
+            <Box sx={{
+                position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: -1,
+                backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+                backgroundSize: 'cover', backgroundPosition: 'top center',
+                '&::after': {
+                    content: '""', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                    background: `linear-gradient(to top, var(--bg-dark) 0%, rgba(0, 2, 10, 0.7) 30%, rgba(0,0,0,0) 100%), linear-gradient(to right, var(--bg-dark) 0%, rgba(0,0,0,0) 50%)`
+                }
+            }} />
+
+            <Box sx={{ maxWidth: '1200px', width: '100%', zIndex: 1 }} className="animate-entrance">
+                <Typography variant="h1" mb={2} sx={{ 
+                    fontWeight: 900, 
+                    fontSize: { xs: '3rem', md: '5rem' }, 
+                    lineHeight: 1.1,
+                    textTransform: 'uppercase',
+                    letterSpacing: '2px',
+                    color: '#fff',
+                    textShadow: '0 0 20px rgba(0,255,255,0.4), 0 0 40px rgba(0,255,255,0.2)'
+                }}>
                     {movie.title || movie.name}
                 </Typography>
-                <Typography variant="body1" mb={4} sx={{ maxWidth: '600px', textShadow: '1px 1px 10px rgba(0,0,0,0.8)', fontSize: '1.2rem', color: 'rgba(255,255,255,0.9)', lineHeight: 1.6 }}>
+                
+                <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+                    <Typography sx={{ color: 'var(--neon-cyan)', fontWeight: 'bold', border: '1px solid var(--neon-cyan)', px: 1.5, py: 0.5, borderRadius: '4px', bgcolor: 'rgba(0,255,255,0.1)' }}>
+                        {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'} TMDB
+                    </Typography>
+                    <Typography sx={{ color: 'rgba(255,255,255,0.8)', px: 1, py: 0.5 }}>
+                        {movie.release_date ? movie.release_date.split('-')[0] : ''}
+                    </Typography>
+                </Box>
+
+                <Typography variant="body1" mb={5} sx={{ 
+                    maxWidth: '700px', 
+                    fontSize: '1.25rem', 
+                    color: 'rgba(255,255,255,0.85)', 
+                    lineHeight: 1.7,
+                    textShadow: '0 2px 10px rgba(0,0,0,0.8)'
+                }}>
                     {movie.overview.length > 250 ? movie.overview.substring(0, 250) + "..." : movie.overview}
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                    <Link to={`/moviedetails/${movie.id}`}>
+
+                <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                    <Link to={movie.media_type === 'tv' ? `/seriesdetails/${btoa(movie.id.toString())}` : `/moviedetails/${btoa(movie.id.toString())}`}>
                         <Button variant="contained" size="large" sx={{ 
-                            backgroundColor: 'rgba(0, 255, 255, 0.9)', 
-                            color: '#000', 
-                            fontWeight: 800, 
-                            borderRadius: '12px',
-                            boxShadow: '0 0 20px rgba(0, 255, 255, 0.5)',
-                            px: 4, py: 1.5,
-                            '&:hover': { backgroundColor: '#fff', boxShadow: '0 0 35px rgba(0, 255, 255, 0.9)' }
-                        }} startIcon={<PlayArrowIcon />}>
+                            backgroundColor: 'var(--neon-cyan)', color: '#000', fontWeight: 800, 
+                            borderRadius: '30px', px: 5, py: 1.8, fontSize: '1.1rem',
+                            boxShadow: '0 0 20px var(--neon-cyan-faded), 0 10px 30px rgba(0,0,0,0.5)',
+                            transition: '0.4s',
+                            '&:hover': { backgroundColor: '#fff', boxShadow: '0 0 40px var(--neon-cyan), 0 10px 40px rgba(0,0,0,0.8)', transform: 'translateY(-3px)' }
+                        }} startIcon={<PlayArrowIcon fontSize="large" />}>
                             Hemen İncele
                         </Button>
                     </Link>
-                    <Button variant="contained" size="large" sx={{ 
-                        backgroundColor: 'rgba(255, 255, 255, 0.08)', 
-                        color: '#fff', 
-                        fontWeight: 700, 
-                        px: 4, py: 1.5,
-                        borderRadius: '12px',
-                        backdropFilter: 'blur(15px)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
-                        '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)', borderColor: 'rgba(255, 255, 255, 0.5)' }
-                    }} startIcon={<InfoOutlinedIcon />}>
+                    <Button variant="outlined" size="large" sx={{ 
+                        color: '#fff', fontWeight: 700, px: 5, py: 1.8, fontSize: '1.1rem', borderRadius: '30px',
+                        borderColor: 'var(--glass-border)', backgroundColor: 'var(--glass-bg)', backdropFilter: 'var(--glass-blur)',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)', transition: '0.3s',
+                        '&:hover': { backgroundColor: 'var(--neon-magenta-faded)', borderColor: 'var(--neon-magenta)', color: '#fff', transform: 'translateY(-3px)', boxShadow: '0 0 30px var(--neon-magenta-faded)' }
+                    }} startIcon={<InfoOutlinedIcon fontSize="large" />}>
                         Daha Fazla Bilgi
                     </Button>
                 </Box>

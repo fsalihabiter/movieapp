@@ -2,11 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AuthProvider } from './context/AuthContext';
+import { ToastProvider } from './context/ToastContext';
+import axios from 'axios';
 
 import App from './App';
-import './i18n';
+import i18n from './i18n';
 
 import './index.css';
+
+axios.interceptors.request.use(config => {
+  if (config.url && config.url.includes('api.themoviedb.org')) {
+    const lang = i18n.resolvedLanguage === 'tr' ? 'tr-TR' : 'en-US';
+    // Sadece statik olan tr-TR parametresini dinamik dile çevirir. 
+    // Eğer bir servis özel olarak en-US istiyorsa (Örn. Fallback servisi) onu bozmaz.
+    if (config.url.includes('language=tr-TR')) {
+        config.url = config.url.replace('language=tr-TR', `language=${lang}`);
+    }
+  }
+  return config;
+});
 
 const theme = createTheme({
   typography: {
@@ -82,7 +96,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthProvider>
     <ThemeProvider theme={theme}>
-      <App />
+      <ToastProvider>
+        <App />
+      </ToastProvider>
     </ThemeProvider>
   </AuthProvider>
 );

@@ -1,25 +1,28 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const User = require('./models/User');
+const List = require('./models/List');
 
-async function checkUsers() {
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URL).then(async () => {
+    console.log("DB Bağlantısı Başarılı - Listeleri Çekiyorum...");
+    
     try {
-        await mongoose.connect('mongodb://127.0.0.1:27017/movieapp');
-        const count = await mongoose.connection.collection('users').countDocuments();
+        const users = await User.find({});
+        console.log(`Veritabanında toplam ${users.length} adet kullanıcı var.`);
         
-        if (count === 0) {
-            console.log('Veritabanında kayıtlı kullanıcı bulunmuyor. (0 users)');
-        } else {
-            console.log(`Veritabanında toplam ${count} adet kullanıcı var.`);
-            const users = await mongoose.connection.collection('users').find().toArray();
-            console.log('Kullanıcı Listesi:');
-            users.forEach(u => {
-                console.log(`- Username: ${u.username}, Email: ${u.email}, IsAdmin: ${u.isAdmin}`);
-            });
-        }
-    } catch (e) {
-        console.error('Bağlantı hatası:', e);
-    } finally {
-        await mongoose.disconnect();
-    }
-}
+        const lists = await List.find({});
+        console.log(`Veritabanında toplam ${lists.length} adet liste var.`);
+        lists.forEach(list => {
+            console.log(`- Title: ${list.title}, Type: ${list.type}, Owner: ${list.owner}, Items: ${list.contentItems.length}`);
+        });
 
-checkUsers();
+    } catch (err) {
+        console.error("Hata:", err);
+    } finally {
+        mongoose.connection.close();
+    }
+}).catch((err) => {
+    console.error("DB Bağlantı Hatası:", err);
+});

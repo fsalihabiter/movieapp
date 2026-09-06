@@ -6,9 +6,11 @@ import Detailed from '../components/MovieDetails/Detailed'
 const MovieDetails = ({ type = "movie" }) => {
 
   const { movieId } = useParams();
+  let decodedId = movieId;
+  try { decodedId = atob(movieId); } catch(e) {}
 
   return (
-    <Detailed movieId={movieId} type={type} />
+    <Detailed movieId={decodedId} type={type} />
   )
 }
 

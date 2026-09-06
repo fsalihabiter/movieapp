@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  movieapp-db:
+    image: mongo:7.0
+    container_name: movieapp_mongo
+    ports:
+      - "27020:27017" # Dışarıdan 27020 portu üzerinden erişilecek
+    volumes:
+      - movieapp_mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  movieapp_mongo_data:

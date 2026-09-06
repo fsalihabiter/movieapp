@@ -6,6 +6,9 @@ import MovieList from '../components/MovieList';
 
 const ActorDetails = () => {
     const { actorId } = useParams();
+    let decodedId = actorId;
+    try { decodedId = atob(actorId); } catch(e) {}
+    
     const API_IMAGE = "https://image.tmdb.org/t/p/w500/";
     
     const [actor, setActor] = useState({});
@@ -15,10 +18,10 @@ const ActorDetails = () => {
     useEffect(() => {
         const fetchActorData = async () => {
             try {
-                const res = await axios.get(`https://api.themoviedb.org/3/person/${actorId}?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR`);
+                const res = await axios.get(`https://api.themoviedb.org/3/person/${decodedId}?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR`);
                 setActor(res.data);
 
-                const creditsRes = await axios.get(`https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR`);
+                const creditsRes = await axios.get(`https://api.themoviedb.org/3/person/${decodedId}/movie_credits?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR`);
                 // Sort by popularity to show best movies first
                 const sortedMovies = creditsRes.data.cast.sort((a, b) => b.popularity - a.popularity).slice(0, 20);
                 setMovies(sortedMovies);
