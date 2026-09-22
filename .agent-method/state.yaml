@@ -1,0 +1,24 @@
+# ADM canonical active state — single state file (v2 alpha).
+# Assumption: ONE active writable ADM session per repository at a time.
+# Permanent session history lives in evidence/sessions/ (this file is current-only).
+schema_version: "2.0"
+
+project:
+  id: movieapp
+  name: Movie App
+
+active:
+  phase_id: PHASE-002
+  gd_id: null
+
+session:            # current open session; cleared by adm-close
+  id: null          # e.g. S-014
+  runtime: null     # claude-code | codex | cursor | antigravity | other
+  started_at: null
+  start_sha: null
+
+blockers: []
+
+review:
+  last_review_id: null
+  status: not-run   # not-run | pending | clean | findings
