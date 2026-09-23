@@ -73,7 +73,8 @@ const RecommendedMovies = () => {
                 setMovies(finalMovies);
 
             } catch (e) {
-                console.error(e);
+                // Oturum geçersiz olduğunda veya veri çekilemediğinde öneri alanını sessizce gizle
+                setMovies([]);
             } finally {
                 setLoading(false);
             }

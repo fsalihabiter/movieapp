@@ -1,0 +1,6 @@
+schema_version: "2.0"
+method: { id: adm, language: tr }
+workflow: { max_active_phases: 1, phase_gd_warning_threshold: 15, require_human_acceptance: true, single_active_session: true }
+git: { required: true }
+review: { required_for_code_changes: true, allow_sequential_fallback: true }
+generated: { projections: [] }

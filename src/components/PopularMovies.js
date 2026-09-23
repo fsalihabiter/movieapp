@@ -4,7 +4,7 @@ import SlideCarousel from "../components/SlideCarousel";
 
 const PopularMovies = () => {
 	const API_POPULAR =
-		"https://api.themoviedb.org/1/movie/popular?api_key=835d874e72bfa8309fafe5737461451b&language=tr";
+		"https://api.themoviedb.org/3/movie/popular?api_key=835d874e72bfa8309fafe5737461451b&language=tr-TR";
 
 	return (
 		<>

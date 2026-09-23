@@ -35,15 +35,18 @@ api.interceptors.response.use(
           withCredentials: true
         });
         
-        localStorage.setItem('accessToken', res.data.accessToken);
+        const newAccessToken = res.data.accessToken;
+        localStorage.setItem('accessToken', newAccessToken);
 
-        // Update authorization header
-        api.defaults.headers.common['token'] = `Bearer ${res.data.accessToken}`;
+        // Update authorization header for future requests and the retrying request
+        api.defaults.headers.common['token'] = `Bearer ${newAccessToken}`;
+        if (originalRequest.headers) {
+          originalRequest.headers['token'] = `Bearer ${newAccessToken}`;
+        }
         return api(originalRequest);
       } catch (refreshError) {
         // Refresh token is expired or invalid
         localStorage.removeItem('accessToken');
-        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }

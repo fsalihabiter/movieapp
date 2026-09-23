@@ -1,0 +1,6 @@
+schema_version: "2.0"
+project: { id: minimal-project, name: Minimal Project }
+active: { phase_id: PHASE-001, gd_id: GD-002 }
+session: { id: null, runtime: null, started_at: null, start_sha: null }
+blockers: []
+review: { last_review_id: REVIEW-20260830-01, status: clean }

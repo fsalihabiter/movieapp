@@ -12,10 +12,10 @@ active:
   gd_id: null
 
 session:            # current open session; cleared by adm-close
-  id: null          # e.g. S-014
-  runtime: null     # claude-code | codex | cursor | antigravity | other
-  started_at: null
-  start_sha: null
+  id: S-001
+  runtime: antigravity
+  started_at: "2026-09-23T00:10:00+03:00"
+  start_sha: "c7406f0104a097ca047fd676b1e0e0c09bf5b036"
 
 blockers: []
 

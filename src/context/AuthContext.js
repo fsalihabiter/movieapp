@@ -14,8 +14,27 @@ export const AuthProvider = ({ children }) => {
       // Decode JWT payload (simple base64 decoding for user info)
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        setUser(payload);
+        if (payload.exp && payload.exp * 1000 < Date.now()) {
+          // Token expired, attempt refresh
+          api.post('/auth/refresh')
+            .then((res) => {
+              localStorage.setItem('accessToken', res.data.accessToken);
+              const refreshedPayload = JSON.parse(atob(res.data.accessToken.split('.')[1]));
+              setUser(refreshedPayload);
+            })
+            .catch(() => {
+              localStorage.removeItem('accessToken');
+              setUser(null);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+          return;
+        } else {
+          setUser(payload);
+        }
       } catch (err) {
+        localStorage.removeItem('accessToken');
         setUser(null);
       }
     }
