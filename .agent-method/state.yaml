@@ -11,14 +11,10 @@ active:
   phase_id: PHASE-002
   gd_id: null
 
-session:            # current open session; cleared by adm-close
-  id: S-001
-  runtime: antigravity
-  started_at: "2026-09-23T00:10:00+03:00"
-  start_sha: "c7406f0104a097ca047fd676b1e0e0c09bf5b036"
+session: null
 
 blockers: []
 
 review:
   last_review_id: null
-  status: not-run   # not-run | pending | clean | findings
+  status: clean

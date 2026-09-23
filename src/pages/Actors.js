@@ -21,7 +21,7 @@ const Actors = () => {
   }, [currentPage]);
 
   return (
-    <Box sx={{ pt: { xs: 12, md: 15 }, pb: 10, px: { xs: 2, md: 5 } }}>
+    <Box sx={{ pt: { xs: 2, md: 3 }, pb: 10, px: { xs: 2, md: 5 } }}>
       <Typography variant="h3" className="neonHeading">Popüler Oyuncular</Typography>
 
       <Grid container spacing={3} sx={{ mt: 2 }}>

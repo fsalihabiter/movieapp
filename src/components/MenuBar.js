@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { teal } from '@mui/material/colors';
 import { AuthContext } from '../context/AuthContext';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';

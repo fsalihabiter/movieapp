@@ -35,7 +35,7 @@ const ActorDetails = () => {
     }, [actorId]);
 
     return (
-        <Box sx={{ width: '100%', minHeight: '100vh', pt: { xs: 12, md: 15 }, pb: 10, px: { xs: 2, md: 5 } }}>
+        <Box sx={{ width: '100%', minHeight: '100vh', pt: { xs: 2, md: 3 }, pb: 10, px: { xs: 2, md: 5 } }}>
             {loading ? <Skeleton animation="wave" width="100%" height={500} sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} /> : (
                 <>
                     <Box sx={{

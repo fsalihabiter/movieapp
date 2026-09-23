@@ -47,8 +47,8 @@ const MyFavorites = () => {
     if (loading) return <Box sx={{ display: 'flex', justifyContent: 'center', mt: 20 }}><CircularProgress sx={{ color: 'var(--neon-cyan)' }} /></Box>;
 
     return (
-        <Box sx={{ p: { xs: 3, md: 6 }, minHeight: '80vh', maxWidth: '1400px', margin: '0 auto' }}>
-            <Typography variant="h3" mb={5} sx={{ color: '#fff', fontWeight: 800, textShadow: '0 0 15px var(--neon-cyan-faded)' }}>
+        <Box sx={{ px: { xs: 2, md: 5 }, pt: { xs: 2, md: 3 }, pb: 8, minHeight: '80vh', maxWidth: '1400px', margin: '0 auto' }}>
+            <Typography variant="h3" mb={4} sx={{ color: '#fff', fontWeight: 800, textShadow: '0 0 15px var(--neon-cyan-faded)' }}>
                 FAVORİLERİM
             </Typography>
             

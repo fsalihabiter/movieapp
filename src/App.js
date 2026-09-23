@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <MenuBar />
-      <Box sx={{ width: '100%', minHeight: '100vh', m: 0, p: 0, pb: 10, pt: '90px' }}>
+      <Box sx={{ width: '100%', minHeight: '100vh', m: 0, p: 0, pb: 10, pt: '80px' }}>
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />

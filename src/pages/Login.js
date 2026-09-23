@@ -33,7 +33,7 @@ const Login = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', px: 2, pt: 10 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 120px)', px: 2, pt: 3, pb: 6 }}>
             {/* Background glowing orb */}
             <Box sx={{ position: 'absolute', width: '300px', height: '300px', background: 'radial-gradient(circle, var(--neon-cyan) 0%, transparent 60%)', filter: 'blur(80px)', opacity: 0.15, zIndex: -1 }} />
 
